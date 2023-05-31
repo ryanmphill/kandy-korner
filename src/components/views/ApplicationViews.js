@@ -8,7 +8,7 @@ export const ApplicationViews = () => {
 	<Routes>
             <Route path="/" element={
                 <>
-                    <h1>Kany Korner</h1>
+                    <h1>Kandy Korner</h1>
                     <div>Your number one krazy kandy supplier</div>
 
                     <Outlet />

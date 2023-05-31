@@ -10,7 +10,7 @@ export const ProductList = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/products`)
+            fetch(`http://localhost:8088/products?_sort=name&_expand=productType`)
                 .then(response => response.json())
                 .then((productArray) => {
                     setProducts(productArray)
@@ -45,6 +45,7 @@ export const ProductList = () => {
                         return <section className="product" key={`product--${product.id}`}>
                             <h3>{product.name}</h3>
                             <div>Price: <CurrencyFormatter amount={product.pricePerUnit} /></div>
+                            <div>Type: {product.productType.category}</div>
                         </section>
                     }
                 )
