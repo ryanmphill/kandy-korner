@@ -1,0 +1,12 @@
+.product {
+    background-color: aliceblue;
+    border: 1.5px dashed lightblue;
+    border-radius: 10px;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+}
+
+.product h3 {
+    padding: 0;
+    margin: 0;
+}
