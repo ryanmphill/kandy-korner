@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react"
 import { CurrencyFormatter } from "./CurrencyFormatter"
 import "./ProductList.css"
+import { useNavigate } from "react-router-dom"
 
 
 export const ProductList = () => {
     const [products, setProducts] = useState([]) // Observing initial state []
     const [filteredProducts, setFilteredProducts] = useState([])
     const [topPriced, updateTopPriced] = useState(false)
+    const navigate = useNavigate()
+
+    // Get the current user so that the proper interface can be displayed for customers vs staff
+    const currentKandyUser = localStorage.getItem("kandy_user")
+    const currentUserObject = JSON.parse(currentKandyUser)
 
     useEffect(
         () => {
@@ -37,6 +43,11 @@ export const ProductList = () => {
 
         <button onClick={ () => updateTopPriced(true) }>Top Priced</button>
         <button onClick={ () => updateTopPriced(false) }>Show All</button>
+
+        {   // Use the '&&' operator if you want to make an 'if' statement and don't need an 'else'
+            // Otherwise, you can use {condition} ? {what happens if true} : {what happens otherwise} 
+            currentUserObject.staff && <button onClick={ () => navigate("/products/addProduct") }>Add a Product</button>
+        }
 
         <article className="products">
             {
