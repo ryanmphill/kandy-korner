@@ -8,8 +8,9 @@ const getProductTypes = async () => {
     return productTypes
 }
 
-
-
+/////////////////////////////////////////////////////////////////////////////
+// Componenet function to render ProductForm ////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 export const ProductForm = () => {
     // ADD DEFAULT PROPERTIES FOR INITIAL STATE
     // State for new product being added
@@ -42,41 +43,45 @@ export const ProductForm = () => {
     const handleSaveProductClick = (clickEvent) => {
         clickEvent.preventDefault()
 
-        // Create the object to be saved to the API
-        const productToSendToApi = {
-            name: newProduct.name,
-            productTypeId: newProduct.productTypeId,
-            pricePerUnit: Math.round(newProduct.pricePerUnit * 100) / 100
+        //Check if all fields have been filled
+        const formFilled = newProduct.name.length > 0 && newProduct.productTypeId > 0 && newProduct.pricePerUnit > 0;
+        if (formFilled) {
+            // Create the object to be saved to the API
+            const productToSendToApi = {
+                name: newProduct.name,
+                productTypeId: newProduct.productTypeId,
+                pricePerUnit: Math.round(newProduct.pricePerUnit * 100) / 100
+            }
+
+            // POST product to API ////////////////////////////////////////////
+            fetch("http://localhost:8088/products", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(productToSendToApi)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        const whatWasPosted = response.json()
+                        console.log("Successful POST");
+                        navigate("/products");
+                        console.log("Here's the response", response)
+                        console.log("Here's what was posted", whatWasPosted)
+                    } else {
+                        window.alert("Something went wrong");
+                    }
+                })
+                .catch(error => {
+                    console.error("An error occurred:", error);
+                });
+        } else {
+            window.alert("Please make sure all fields have been entered")
         }
-        /* Window alert for testing
-        window.alert(`name: ${productToSendToApi.name},
-        productTypeId: ${productToSendToApi.productTypeId},
-        pricePerUnit: ${productToSendToApi.pricePerUnit}
-        `) */
-        // Perform the fetch() to POST the object to the API
-        
-        fetch("http://localhost:8088/products", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(productToSendToApi)
-        })
-          .then(response => {
-              if (response.ok) {
-                  window.alert("Successful POST");
-                  navigate("/products");
-              } else {
-                  window.alert("Something went wrong");
-              }
-          })
-          .catch(error => {
-              console.error("An error occurred:", error);
-          });
     }
     
 
-    // return the form for product submission
+    // return the form for product submission ////////////////////////////////
     return <>
         <form className="productForm">
             <h2 className="productForm__title">New Product</h2>
