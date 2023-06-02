@@ -9,7 +9,7 @@ const getProductTypes = async () => {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Componenet function to render ProductForm ////////////////////////////////
+// Component function to render ProductForm ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 export const ProductForm = () => {
     // ADD DEFAULT PROPERTIES FOR INITIAL STATE
@@ -142,7 +142,6 @@ export const ProductForm = () => {
                                 const copy = {...newProduct}
                                 copy.pricePerUnit = changeEvent.target.value !== "" ? parseFloat(changeEvent.target.value) : 0
                                 updateNewProduct(copy) // Updating product with value of copy
-                                console.log(copy)
                             }
                         } />
                 </div>
