@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { CurrencyFormatter } from "./CurrencyFormatter"
 import "./ProductList.css"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { ShowMeWhere } from "./ShowMeWhere"
 
 
 export const ProductList = ({ searchTermState, updateSearchTermState }) => {
@@ -16,7 +17,7 @@ export const ProductList = ({ searchTermState, updateSearchTermState }) => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/products?_sort=name&_expand=productType`)
+            fetch(`http://localhost:8088/products?_sort=name&_expand=productType&_embed=productInStore`)
                 .then(response => response.json())
                 .then((productArray) => {
                     setProducts(productArray)
@@ -78,7 +79,9 @@ export const ProductList = ({ searchTermState, updateSearchTermState }) => {
                              <h3>{product.name}</h3>
                              <div>Price: <CurrencyFormatter amount={product.pricePerUnit} /></div>
                              {  // Only show the 'type' for Employees
-                                 currentUserObject.staff && <div>Type: {product.productType.category}</div>
+                                 currentUserObject.staff 
+                                 ? <div>Type: {product.productType.category}</div>
+                                 : <ShowMeWhere productInStoreArray={product.productInStore} />
                              }
                          </section>
                      }
