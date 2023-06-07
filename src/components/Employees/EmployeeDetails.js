@@ -28,7 +28,7 @@ export const EmployeeDetails = () => {
 
     return <>
         <section className="employee">
-            <header className="employee__header">{employee?.user?.name || "hmm"}</header>
+            <header className="employee__header">{employee?.user?.name || "User data not found"}</header>
             <div>Email: {employee?.user?.email}</div>
             <div>Location of employment: {employee?.location?.address}</div>
             <div>Rate: ${employee?.payRate?.toFixed(2)}</div>
